@@ -58,8 +58,11 @@ Los issues o errores se solucionan en una rama "hotfix" para unirse a master tan
 Se puede crear todas las ramas y commits que se requieran para mantener ordenado el proyecto. Incluso puede aprovechar el registro de cambios de Git para crear ramas, traer versiones viejas del código, arreglarlas y combinarlas de nuevo para mejorar el proyecto.
 
 Se debe tener en cuenta al combinar ramas los conflictos que puedan generarse. Git siempre intentará unir los cambios automáticamente, pero no siempre funciona bien, eventualmente se deben resolver los conflictos a mano.
-Comandos básicos
-Crear repositorios y commits
+
+# Comandos básicos
+
+## Crear repositorios y commits
+
 git init: inicializa un repositorio de GIT en la carpeta donde se ejecute el comando.
 git add: añade los archivos especificados al área de preparación (staging).
 git commit -m "commit description": confirma los archivos que se encuentran en el área de preparación y los agrega al repositorio.
@@ -69,13 +72,17 @@ git rm (. -r, filename) (--cached): remueve los archivos del index.
 git config --global user.email <tu@email.com>: configura un email.
 git config --global user.name <Nombre como se verá en los commits>: configura un nombre.
 git config --list: lista las configuraciones.
-Analizar cambios en los archivos de un proyecto Git
+
+## Analizar cambios en los archivos de un proyecto Git
+
 git log: lista de manera descendente los commits realizados.
 git log --stat: además de listar los commits, muestra la cantidad de bytes añadidos y eliminados en cada uno de los archivos modificados.
 git log --all --graph --decorate --oneline: muestra de manera comprimida toda la historia del repositorio de manera gráfica y embellecida.
 git show filename: permite ver la historia de los cambios en un archivo.
 git diff <commit1> <commit2>: compara diferencias entre en cambios confirmados.
-Volver en el tiempo con branches y checkout
+    
+## Volver en el tiempo con branches y checkout
+    
 git reset <commit> --soft/hard: regresa al commit especificado, eliminando todos los cambios que se hicieron después de ese commit.
 git checkout <commit/branch> <filename>: permite regresar al estado en el cual se realizó un commit o branch especificado, pero no elimina lo que está en el staging area.
 git checkout -- <filePath>: deshacer cambios en un archivo en estado modified (que ni fue agregado a staging)
@@ -92,23 +99,29 @@ git reset --soft: Vuelve el branch al estado del commit especificado, manteniend
 git reset --hard: Borra absolutamente todo. Toda la información de los commits y del área de staging se borra del historial.
 
 git reset HEAD: No borra los archivos ni sus modificaciones, solo los saca del área de staging, de forma que los últimos cambios de estos archivos no se envíen al último commit. Si se cambia de opinión se los puede incluir nuevamente con git add.
-Ramas o Branches
+    
+# Ramas o Branches
+    
 Al crear una nueva rama se copia el último commit en esta nueva rama. Todos los cambios hechos en esta rama no se reflejarán en la rama master hasta que hagamos un merge.
+    
 git branch <new branch>: crea una nueva rama.
 git checkout <branch name>: se mueve a la rama especificada.
 git merge <branch name>: fusiona la rama actual con la rama especificada y crea un nuevo commit de esta fusión.
 git branch: lista las ramas creadas.
-¿Cómo resolver conflictos en Git?
+    
+# ¿Cómo resolver conflictos en Git?
 Al trabajar en dos o más ramas sobre las mismas líneas de código, ocurrirían conflictos a la hora de hacer merge. Git automáticamente nos especificará en nuestro código dónde se encuentran los conflictos.
 
 Para resolver este problema debemos especificar la rama de donde queremos obtener el cambio, quedarnos con esas modificaciones y realizar un commit para completar el merge.
-Trabajar con un repositorio remoto
+    
+# Trabajar con un repositorio remoto
 git remote add origin <link>: enlaza el repositorio local con el repositorio remoto.
 git push origin <branchName>: exportar los archivos confirmados en el repositorio local al repositorio remoto.
 git pull origin <branchName>: importa los archivos del repositorio remoto al repositorio local y al working directory.
 git fetch: importa los archivos remotos al repositorio local pero no al working directory.
 git merge: una vez hecho el git fetch, hace falta hacer un git merge para que los archivos importados aparezcan en el working directory.
-GitHub - Repositorios remotos
+
+# GitHub - Repositorios remotos
 Por seguridad y practicidad, para trabajar con repositorios remotos lo ideal es no enviar las credenciales de loging cada vez que se transfiera información con la plataforma, para eso se configuran las llaves SSH, siendo el método más seguro.
 Llaves SSH
 Generar las llaves SSH. Si bien no es obligatorio, se recomienda proteger la llave privada con una contraseña cuando lo solicita el proceso de generación.
@@ -137,18 +150,20 @@ Host *
 # (en caso de error se puede ejecutar este mismo comando
 # pero sin el argumento -K):
 ssh-add -K <ruta-a-la-llave-privada>
-Conexión a GitHub con SSH
+
+# Conexión a GitHub con SSH
 Luego de crear las llaves SSH se debe entregar la llave pública a GitHub para realizar la comunicación de forma segura y sin necesidad de escribir el usuario y contraseña.
 
 Para esto entrar a la Configuración de Llaves SSH en GitHub, crear una nueva llave con el nombre deseado y el contenido de la llave pública de tu computadora.
 
 Luego actualizar en nuestra pc la URL del repositorio remoto, cambiando la URL con HTTPS por la URL con SSH:
 git remote set-url origin <url-ssh-del-repositorio-en-github>
-Tags y versiones en Git y GitHub
+    
+# Tags y versiones en Git y GitHub
 Los tags o etiquetas permiten asignar versiones a los commits con cambios más importantes o significativos del proyecto.
 En GitHub esto crea releases, versiones descargables del proyecto en ese preciso estado.
 
-Comandos para trabajar con etiquetas:
+# Comandos para trabajar con etiquetas:
 Crear un nuevo tag y asignarlo a un commit:
 git tag -a <nombre-del-tag> -m <mensaje del commit> <id-del-commit-al-que-asignar-la-etiqueta>
 Borrar un tag en el repositorio local:
@@ -197,17 +212,17 @@ Múltiples entornos de trabajo
 Rebase: Reorganizando el trabajo realizado
 Con rebase se puede recoger todos los cambios confirmados en una rama y ponerlos sobre otra.
 
-Cambiar a la rama que queremos traer los cambios
+# Cambiar a la rama que queremos traer los cambios
 git checkout experiment
 Aplicar rebase para traer los cambios de la rama que queremos
 git rebase master
 
 "rebase es una mala práctica no debería usarse a menos que no quede otra opción."
 
-Stash: Guardar cambios en memoria y recuperarlos después
+# Stash: Guardar cambios en memoria y recuperarlos después
 Sirve para cuando se necesita recordar el estado actual del directorio de trabajo y del índice, pero se requiere volver y limpiar el directorio de trabajo.
 
- git stash
+git stash
 guarda las modificaciones locales en memoria y revierte el directorio de trabajo para coincidir con el estado del commit de HEAD.
 Es típico cuando se hacen cambios que no merecen una rama o no merecen un rebase, sino que simplemente se está probando algo y luego se quiere volver rápidamente a la versión anterior, que es la correcta.
 git stash branch <nombre-nueva-rama>
